@@ -1,0 +1,43 @@
+def merge(list1,start,end): #O(n)
+  mid=(start+end)//2
+
+  # the first sublist starts from start -> mid, the second sublist starts from mid+1 -> end
+
+  merged_list=[]
+
+  index1=start # keeps track of the elements added from the first sublist
+  index2=mid+1 # keeps track of the elements added from the second sublist
+
+
+  while index1<=mid and index2<= end:
+    if list1[index1]<list1[index2]:
+      merged_list.append(list1[index1]) # I am copying from the first sublist
+      index1+=1
+    else: # I am copying from the second sublist
+      merged_list.append(list1[index2])
+      index2+=1
+  
+  while index1<=mid: # copy the remaining elements of the first sublist
+      merged_list.append(list1[index1]) 
+      index1+=1
+  
+  while index2<=end: # copy the remaining elements of the second sublist
+      merged_list.append(list1[index2]) 
+      index2+=1
+  # we have completed the merge, we need to update the original list
+  list1[start:end+1]=merged_list # I replaced the elements in list1 with their sorted list
+
+def mergesort(list1,start,end):  # O(n*log(n)), n being the length of the list
+  print(start,end)
+  if start==end: # I reached a sublist of length ==1
+    return
+    
+  mid=(start+end)//2
+  mergesort(list1,start,mid) # divide my list into 2
+  mergesort(list1,mid+1,end)
+
+  merge(list1,start,end)
+
+list1=[2,0,3,0,10,-1,6]
+mergesort(list1,0,len(list1)-1)
+print(list1)
